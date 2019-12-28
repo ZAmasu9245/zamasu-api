@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Interface de connexion</title>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Hanalei+Fill&display=swap" rel="stylesheet">
+        <style>
+            body {
+                background: #141415 url("https://hellofuture.orange.com/app/uploads/2018/01/Intro-HELLO-FUTURE-1920x1080_v2.gif");
+            }
+            .help-input-email {
+                color: #A5A3A0;
+                cursor: pointer;
+                transition: 0.5s;
+                font-size: 20px;
+                width: 318.9px;
+                padding-top: 20px;
+            }
+            .login-input-li {
+                list-style-type: none;
+            }
+            .login-input {
+                outline: none;
+                border: #040405 1.5px solid;
+                background: #292727;
+                transition: 0.5s;
+                width: 350px;
+                height: 20px;
+                color: white;
+                border-radius: 5px;
+                margin-top: -20px;
+            }
+            .login-input:focus {
+                border: #677bc4 1.5px solid;
+            }
+            .help-input-password {
+                color: #A5A3A0;
+                cursor: pointer;
+                transition: 0.5s;
+                font-size: 20px;
+                width: 318.9px
+            }
+            .login-input-2 {
+                outline: none;
+                border: #040405 1.5px solid;
+                background: #292727;
+                transition: 0.5s;
+                width: 350px;
+                height: 20px;
+                color: white;
+                border-radius: 5px;
+                margin-bottom: 20px;
+                margin-top: -20px;
+            }
+            .login-input-2:focus {
+                border: #677bc4 1.5px solid;
+            }
+            .li-valid {
+                list-style-type: none;
+                margin-top: 20px;
+                display: inline-block;
+            }
+            .valid {
+                padding: 20px;
+                background: #292727;
+                border-radius: 3px;
+                margin-left: -5px;
+                border: none;
+                color: white;
+                transform: perspective(200px) rotateY(-15deg);
+                box-shadow: 8px -8px 10px black;
+                cursor: pointer;
+                font-size: 15px;
+                text-transform: uppercase;
+                outline: none;
+                transition: 0.5s;
+                margin-right: 45px;
+            }
+            .valid:hover {
+                transform: perspective(200px) rotateY(-30deg) translateZ(20px);
+                box-shadow: 9px -6px 10px black;;
+                transition: 0.5s;
+            }
+            .li-cancel {
+                list-style-type: none;
+                margin-top: 20px;
+                display: inline-block;
+            }
+            .cancel {
+                padding: 20px;
+                background: #292727;
+                border-radius: 3px;
+                margin-left: -5px;
+                border: none;
+                color: white;
+                transform: perspective(200px) rotateY(15deg);
+                box-shadow: -8px -8px 10px black;
+                cursor: pointer;
+                font-size: 15px;
+                text-transform: uppercase;
+                outline: none;
+                transition: 0.5s;
+            }
+            .cancel:hover {
+                transform: perspective(200px) rotateY(30deg) translateZ(20px);
+                box-shadow: -10px -6px 10px black;;
+                transition: 0.5s;
+            }
+            .connect-button {
+                box-shadow: 5px 6px 10px white;
+                width: 150px;
+                height: 150px;
+            }
+            .button-help-div li {
+                display: inline-block;
+            }
+            .help-button-p {
+                margin-left: 10px;
+                font-size: 20px;
+                color: #FFFFFF;
+            }
+            .button-help-div {
+                position: absolute;
+                margin-left: -40000px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="body" id="body">
+            <section class="login-box" id="login-box">
+                <section>
+                    <ul class="login-puce" id="login-puce">
+                        <li class="login-input-li" id="login-input-li">
+                            <p class="help-input-email" id="help-input-email">Indiquez votre adresse e-mail</p>
+                            <input class="login-input" id="login-input">
+                            <p class="help-input-password" id="help-input-password">Indiquez votre mot de passe</p>
+                            <input class="login-input-2" id="login-input-2" type="password">
+                            </li>
+                            <div class="button-div" id="button-div">
+                                <div class="button-help-div">
+                                    <li>
+                                        <img class="help-button" id="help-button" src="https://discordemoji.com/assets/emoji/8104LoadingEmote.gif" style="width: 30px;height: 30px;">
+                                    </li>
+                                    <li>
+                                        <p class="help-button-p" id="help-button-p">Connexion au compte</p>
+                                    </li>
+                                </div>
+                                <li class="li-valid" id="li-valid">
+                                    <button class="valid" id="valid">Se connecter</button>
+                                </li>
+                                <li class="li-cancel" id="li-cancel">
+                                    <button class="cancel" id="cancel">Annuler</button>
+                                </li>
+                            </div>
+                    </ul>
+                    <script>
+                        const valid_button = document.getElementById("valid");
+                        let input_password = document.getElementById("login-input-2");
+                        let input_email = document.getElementById("login-input");
+                        valid_button.addEventListener("click", function() {
+                            const myHeaders = new Headers();
+                            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+                            const urlencoded = new URLSearchParams();
+                            urlencoded.append("email", `${input_email.value}`);
+                            urlencoded.append("password", `${input_password.value}`);
+
+                            const requestOptions = {
+                            method: 'POST',
+                            headers: myHeaders,
+                            body: urlencoded,
+                            redirect: 'follow'
+                            };
+
+                            fetch("http://localhost/api/users/login", requestOptions)
+                            .then(response => response.text())
+                            .then(async result => {
+                                const string_result = JSON.stringify(result);
+                                if(string_result.match(/Some parameters are incorrect/i)) {
+                                    const help_email_text = document.getElementById("help-input-email");
+                                    const help_password_text = document.getElementById("help-input-password");
+                                    input_email.style.border = "#d14444 1.5px solid";
+                                    input_password.style.border = "#d14444 1.5px solid";
+                                    help_email_text.style.color = "#d14444";
+                                    help_password_text.style.color = "#d14444";
+                                    input_email.style.background = "#292727"
+                                    input_password.style.background = "#292727"
+                                    help_email_text.textContent = "Adresse e-mail ou mot de passe invalide"
+                                    return help_password_text.textContent = "Adresse e-mail ou mot de passe invalide"
+                                }
+                                if(string_result.match(/cannot found account/i)) {
+                                    const help_email_text = document.getElementById("help-input-email");
+                                    const help_password_text = document.getElementById("help-input-password");
+                                    input_email.style.border = "#d14444 1.5px solid";
+                                    input_password.style.border = "#d14444 1.5px solid";
+                                    help_email_text.style.color = "#d14444";
+                                    input_email.style.background = "#292727"
+                                    input_password.style.background = "#292727"
+                                    help_password_text.style.color = "#d14444";
+                                    help_email_text.textContent = "";
+                                    return help_password_text.textContent = "Compte introuvable"
+                                }
+                                if(string_result.match(/incorrect values/i)) {
+                                    const help_email_text = document.getElementById("help-input-email");
+                                    const help_password_text = document.getElementById("help-input-password");
+                                    input_email.style.border = "#d14444 1.5px solid";
+                                    input_password.style.border = "#d14444 1.5px solid";
+                                    help_email_text.style.color = "#d14444";
+                                    help_password_text.style.color = "#d14444";
+                                    input_email.style.background = "#292727"
+                                    input_password.style.background = "#292727"
+                                    help_email_text.textContent = "Adresse e-mail ou mot de passe invalide"
+                                    return help_password_text.textContent = "Adresse e-mail ou mot de passe invalide"
+                                }
+                                if(string_result.match(/verify/i)) {
+                                    const parsed_result = JSON.parse(result)
+                                    const help_email_text = document.getElementById("help-input-email");
+                                    const help_password_text = document.getElementById("help-input-password");
+                                    const help_button = document.getElementById("help-button");
+                                    const box_help_button = document.getElementById("button-help-div");
+                                    input_email.style.border = "#040405 1.5px solid";
+                                    input_password.style.border = "#040405 1.5px solid";
+                                    input_email.style.background = "#e8f0fe"
+                                    input_password.style.background = "#e8f0fe"
+                                    input_email.style.color = "black"
+                                    input_password.style.color = "black"
+                                    help_email_text.style.color = "#FFFFFF";
+                                    help_password_text.style.color = "#FFFFFF";
+                                    help_email_text.textContent = ""
+                                    help_password_text.textContent = "Connexion en cours"
+                                    function await1seconds(x) {
+                                        return new Promise(resolve => {
+                                            setTimeout(() => {
+                                                resolve(x);
+                                            }, 1000)
+                                        })
+                                    }
+                                    setInterval(async () => {
+                                    help_password_text.textContent = "Connexion en cours."
+                                    await await1seconds()
+                                    help_password_text.textContent = "Connexion en cours.."
+                                    await await1seconds()
+                                    help_password_text.textContent = "Connexion en cours..."
+                                    }, 1000)
+                                    const user_email = parsed_result.user_email;
+                                    const user_name = parsed_result.user_name;
+                                    const user_id = parsed_result.user_id;
+                                    const user_iconURl = parsed_result.user_iconURL;
+                                    localStorage.setItem("user_email", user_email);
+                                    localStorage.setItem("user_name", user_name);
+                                    localStorage.setItem("user_id", user_id);
+                                    localStorage.setItem("user_iconURL", user_iconURl);
+                                    window.location.href = "http://localhost/"
+                                }
+                            })
+                        })
+                    </script>                      
+                </section>
+            </section>
+        </div>
+    </body>
+</html>

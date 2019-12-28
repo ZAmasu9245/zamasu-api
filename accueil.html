@@ -1,0 +1,178 @@
+<!Doctype html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/401aa69219.js" crossorigin="anonymous"></script>        
+        <style>
+            body {
+                background: #141415 url("https://hellofuture.orange.com/app/uploads/2018/01/Intro-HELLO-FUTURE-1920x1080_v2.gif");
+            }
+            .connect-menu {
+                text-align: right;
+            }
+            .login-box {
+                margin-top: 30px;
+                margin-right: 25px;
+                display: inline-block;
+            }
+            .register-box {
+                margin-top: 30px;
+                margin-right: 25px;
+                display: inline-block;
+            }
+            .login-button-li {
+                display: inline-block;
+            }
+            .register-button-li {
+                display: inline-block;
+            }
+            .login-button {
+                padding: 10px;
+                text-decoration: none;
+                color: #A5A3A0;
+                transition: 0.5s;
+                border: #A5A3A0 2px solid;
+                border-radius: 70px;
+                text-transform: uppercase;
+                font-family: 'Alfa Slab One';
+            }
+            .login-button:hover {
+                color: #FFFFFF;
+                border: #FFFFFF 2px solid;
+            }
+            .register-button {
+                padding: 10px;
+                text-decoration: none;
+                color: #A5A3A0;
+                transition: 0.5s;
+                border: #A5A3A0 2px solid;
+                border-radius: 70px;
+                text-transform: uppercase;
+                font-family: 'Alfa Slab One';
+            }
+            .register-button:hover {
+                color: #FFFFFF;
+                border: #FFFFFF 2px solid;
+            }
+            .settings-user {
+                margin-top: 20px;
+                margin-right: 25px;
+                display: inline-block;
+            }
+            .user-button {
+                display: inline-block;
+                padding: 10px;
+                text-decoration: none;
+                color: #A5A3A0;
+                transition: 0.5s;
+                border: #A5A3A0 2px solid;
+                border-radius: 70px;
+                text-transform: uppercase;
+                font-family: 'Alfa Slab One';
+                cursor: pointer;
+            }
+            .user-button:hover {
+                color: #FFFFFF;
+                border: #FFFFFF 2px solid;
+            }
+            .leave-button {
+                display: inline-block;
+                padding: 10px;
+                margin-left: 20px;
+                text-decoration: none;
+                color: #A5A3A0;
+                transition: 0.5s;
+                border: #A5A3A0 2px solid;
+                border-radius: 70px;
+                text-transform: uppercase;
+                font-family: 'Alfa Slab One';
+                cursor: pointer;
+            }
+            .leave-button:hover {
+                color: #FFFFFF;
+                border: #FFFFFF 2px solid;
+            }
+            .leave-help-button {
+                position: absolute;
+                left: -400000px;
+                color: #FFFFFF;
+                background: #000000;
+                padding: 10px;
+                border-radius: 6px;
+            }
+            .leave-help-button:before {
+                content: "";
+                position: absolute;
+                left: 45%;
+                top: -15px;
+                width: 0;
+                height: 0;
+                border-right: 10px solid transparent;
+                border-left: 10px solid transparent;
+                border-bottom: 20px solid #000000;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav-menu" id="nav-menu">
+            <p class="leave-help-button" id="leave-help-button">Déconnexion</p>
+            <script>
+                
+            </script>
+        </div>
+        <div class="connect-menu" id="connect-menu">
+            <script>
+                const connect_box = document.getElementById("connect-menu");
+                if(window.localStorage.user_id === undefined && window.localStorage.user_email === undefined && window.localStorage.user_name === undefined && window.localStorage.user_iconURL === undefined) {
+                    connect_box.innerHTML += '<div class="login-box" id="login-box"><li class="login-button-li" id="login-button-li"><a class="login-button" id="login-button" href="http://localhost/login">Se connecter</a></li></div><div class="register-box" id="register-box"><li class="register-button-li" id="register-button-li"><a class="register-button" id="register-button" href="http://localhost/register">S\'enregistrer</a></li></div>'
+                } else {
+                    connect_box.innerHTML += `<div class="settings-user" id="settings-user"><li class="user-button" id="user-button">${window.localStorage.getItem("user_name")}</li><li class="leave-button" id="leave-button"</li><i class="fas fa-sign-out-alt"></i></div>'`
+                }
+            </script>
+            <script>
+                const user_button = document.getElementById("user-button");
+                const leave_button = document.getElementById("leave-button");
+
+                leave_button.addEventListener("mouseover", async function() {
+                    const leave_help_button = document.getElementById("leave-help-button");
+                    leave_help_button.style.top = "80px";
+                    leave_help_button.style.left = "91.8%";
+                    leave_help_button.textContent = "Déconnexion"
+                })
+                leave_button.addEventListener("mouseleave", async function() {
+                    const leave_help_button = document.getElementById("leave-help-button");
+                    leave_help_button.style.top = "";
+                    leave_help_button.style.left = "";
+                })
+                leave_button.addEventListener("click", async function() {
+                    window.localStorage.removeItem("user_email");
+                    window.localStorage.removeItem("user_name");
+                    window.localStorage.removeItem("user_id");
+                    window.localStorage.removeItem("user_iconURL");
+                    window.location.reload()
+                })
+
+                user_button.addEventListener("mouseover", async function() {
+                    const leave_help_button = document.getElementById("leave-help-button");
+                    leave_help_button.style.top = "80px";
+                    leave_help_button.style.left = "81.5%";
+                    leave_help_button.textContent = "Paramètres d'utilisateur"
+                })
+                user_button.addEventListener("mouseleave", async function() {
+                    const leave_help_button = document.getElementById("leave-help-button");
+                    leave_help_button.style.top = "";
+                    leave_help_button.style.left = "";
+                })
+            </script>
+        </div>
+        <div class="middle-section" id="middle-section">
+            <script></script>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <script></script>
+        </div>
+        <div class="footer" id="footer">
+            <script></script>
+        </div>
+    </body>
+</html>
